@@ -1,0 +1,69 @@
+[project]
+name = "portfolio-matheusfabiao"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "Matheus Fabião",email = "matheusfabiao.dev@gmail.com"}
+]
+license = {text = "MIT"}
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "django (>=5.1.7,<6.0.0)",
+    "psycopg2 (>=2.9.10,<3.0.0)",
+    "python-decouple (>=3.8,<4.0)",
+    "dj-database-url (>=2.3.0,<3.0.0)"
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.9.9"
+pytest = "^8.3.5"
+pytest-cov = "^6.0.0"
+pytest-django = "^4.10.0"
+taskipy = "^1.14.1"
+
+
+[tool.poetry.group.doc.dependencies]
+mkdocs = "^1.6.1"
+mkdocs-material = "^9.6.7"
+mkdocstrings = "^0.28.2"
+mkdocstrings-python = "^1.16.2"
+
+[tool.ruff]
+line-length = 88
+extend-exclude = ['migrations']
+
+[tool.ruff.lint]
+preview = true
+select = ['I', 'F', 'E', 'W', 'PL', 'PT']
+ignore = [
+    'PLC0415', # Imports at the top of the file
+    'E501',    # Line too long
+]
+
+[tool.ruff.format]
+preview = true
+quote-style = 'single'
+
+[tool.pytest.ini_options]
+pythonpath = '.'
+addopts = '-p no:warnings'
+
+[tool.taskipy.tasks]
+run = 'python djangoapp/manage.py runserver'
+
+pre_test = 'task lint'
+test = 'pytest -s -x --cov=djangoapp -vv'
+post_test = 'coverage html'
+
+lint = 'ruff check . && ruff check . --diff'
+format = 'ruff check . --fix && ruff format .'
+
+build = 'docker-compose up --build'
+up = 'docker-compose up'
+down = 'docker-compose down'
