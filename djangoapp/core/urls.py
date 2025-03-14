@@ -25,6 +25,7 @@ urlpatterns = [
 ]
 
 # Configure static and media files for development
+# What this does is that it allows us to access the media and static files in the development server
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

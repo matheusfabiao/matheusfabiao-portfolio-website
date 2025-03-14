@@ -51,7 +51,9 @@ DJANGO_APPS = [
 THIRD_PARTY_APPS = []
 
 # My installed apps
-MY_APPS = []
+MY_APPS = [
+    'portfolio',
+]
 
 # All installed apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + MY_APPS
